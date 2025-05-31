@@ -1,0 +1,828 @@
+/* General Body Styles */
+html {
+    box-sizing: border-box;
+    font-size: 16px; /* Base font size */
+    scroll-behavior: smooth; /* Smooth scrolling */
+}
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2); /* Soft Blue to Purple */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for scroll */
+    min-height: 100vh;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+}
+
+.dashboard-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header Styles */
+.dashboard-header {
+    background: #87CEEB; /* Sky Blue */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 20px 20px 0 0; /* Rounded top corners */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.dashboard-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8em;
+    margin: 0;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.dashboard-nav {
+    display: flex; /* Ensure nav buttons are in a row */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center buttons */
+    gap: 10px; /* Space between buttons */
+}
+
+.dashboard-nav .nav-button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background-color: #764ba2; /* Purple from theme */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 0.9em;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.dashboard-nav .nav-button:hover {
+    color: white;
+    background-color: #5a6fd8; /* Darker Blue from theme */
+    transform: translateY(-2px);
+}
+
+.dashboard-nav .nav-button:after {
+    content: "";
+    background: rgba(255, 255, 255, 0.2); /* Lighter white for a subtle overlay */
+    position: absolute;
+    z-index: -1;
+    left: -20%;
+    right: -20%;
+    top: 0;
+    bottom: 0;
+    transform: skewX(-45deg) scale(0, 1);
+    transition: all 0.5s;
+}
+
+.dashboard-nav .nav-button:hover:after {
+    transform: skewX(-45deg) scale(1, 1);
+}
+
+.dashboard-nav .nav-button.active {
+    background-color: #4a5db0; /* A darker shade of the blue/purple */
+    box-shadow: 0 0 10px rgba(74, 93, 176, 0.5);
+}
+
+.profile-area {
+    display: flex;
+    align-items: center;
+}
+
+.profile-area .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-right: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-area #userName {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+/* Main Content Area */
+.dashboard-main {
+    display: flex; /* Changed to flex for content sections */
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+/* Content Sections (for tab-like behavior) */
+.content-section {
+    display: none; /* Hidden by default */
+    /* Ensure content sections still use grid for their internal widgets */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.content-section.active-content {
+    display: grid; /* Show when active */
+}
+
+
+/* Widget Styles */
+.widget {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex; /* Changed to flex for consistent internal layout */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.widget-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.widget h2 {
+    font-family: 'Fredoka One', cursive;
+    color: #764ba2; /* Purple from theme */
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.widget h3 {
+    font-family: 'Fredoka One', cursive;
+    color: #667eea; /* Soft Blue from theme */
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.widget p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.balance-amount {
+    font-size: 1.8em;
+    font-weight: 900;
+    color: #32CD32; /* Lime Green - This can stay as it indicates positive balance */
+}
+
+/* Progress Bar Styles */
+.progress-bar-container {
+    width: 90%;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    margin: 15px 0;
+    overflow: hidden;
+    height: 30px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    width: 50%;
+    background: linear-gradient(90deg, #667eea, #5a6fd8); /* Blue shades from theme */
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Action Button Styles */
+.action-button {
+    background-color: #764ba2; /* Purple from theme */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    font-size: 1em;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.action-button:hover {
+    background-color: #5a6fd8; /* Darker Blue from theme */
+    transform: scale(1.05);
+    color: white;
+}
+
+.action-button:after {
+    content: "";
+    background: rgba(255, 255, 255, 0.2); /* Lighter white for a subtle overlay */
+    position: absolute;
+    z-index: -1;
+    left: -20%;
+    right: -20%;
+    top: 0;
+    bottom: 0;
+    transform: skewX(-45deg) scale(0, 1);
+    transition: all 0.5s;
+}
+
+.action-button:hover:after {
+    transform: skewX(-45deg) scale(1, 1);
+}
+
+/* Transaction History (Pocket Money Widget) */
+.transaction-history {
+    margin-top: 15px;
+    text-align: left;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.transaction-history h4 {
+    font-size: 1em;
+    color: #667eea; /* Soft Blue from theme */
+    margin-bottom: 5px;
+}
+
+.transaction-history ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 0.9em;
+}
+
+.transaction-history ul li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+}
+.transaction-history ul li:last-child {
+    border-bottom: none;
+}
+
+/* Parental Control specific styles */
+.parental-control-widget {
+    grid-column: 1 / -1; /* Make this widget span full width */
+    text-align: left; /* Align text to left within this widget */
+}
+
+.parental-control-widget .parental-control-section {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 100%; /* Ensure sections take full width of the widget */
+    box-sizing: border-box;
+}
+
+.parental-control-widget .parental-control-section h3 {
+    color: #764ba2; /* Purple from theme */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.parental-control-widget ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.parental-control-widget ul li {
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.parental-control-widget .download-link {
+    display: inline-block; /* Make the link look like a button */
+    text-decoration: none;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.parental-control-widget .small-text {
+    font-size: 0.85em;
+    color: #777;
+    margin-top: 15px;
+}
+
+
+/* Footer Styles */
+.dashboard-footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    color: #ddd;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 20px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Darker overlay for better contrast */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe; /* Keep modal content light for readability */
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #764ba2; /* Purple to match theme */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    font-family: 'Fredoka One', cursive;
+    color: #667eea; /* Soft Blue from theme */
+    margin-top: 0;
+}
+
+.modal-content input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin: 15px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+.modal-content input[type="number"]:focus {
+    border-color: #764ba2; /* Purple from theme */
+    outline: none;
+}
+
+.modal-message {
+    margin-top: 15px;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    .dashboard-nav {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+    .dashboard-nav .nav-button {
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+    .profile-area {
+        margin-top: 10px;
+    }
+    .dashboard-main {
+        flex-direction: column; /* Stack content sections */
+    }
+    .content-section {
+        grid-template-columns: 1fr; /* Stack widgets within sections */
+    }
+    .widget h2 {
+        font-size: 1.3em;
+    }
+    .widget h3 {
+        font-size: 1.1em;
+    }
+    .balance-amount {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .dashboard-container {
+        padding: 15px;
+    }
+    .dashboard-header h1 {
+        font-size: 1.5em;
+    }
+    .logo-img {
+        height: 30px;
+    }
+    .profile-area .avatar {
+        width: 40px;
+        height: 40px;
+    }
+    .action-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+}
+body {
+    background-color: #f0f4ff;
+    font-family: 'Comic Sans MS', 'Poppins', cursive, sans-serif;
+    padding: 2rem;
+    color: #444;
+    text-align: center;
+}
+
+/* Chart Container */
+.chart-container {
+    background-color: white;
+    border-radius: 25px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Heading */
+.chart-container h2 {
+    color: #6c63ff;
+    margin-bottom: 2rem;
+}
+
+/* Canvas for chart.js or matplotlib image */
+.chart-container canvas,
+.chart-container img {
+    max-width: 100%;
+    border-radius: 15px;
+}
+
+/* Form Styling */
+form {
+    background-color: white;
+    border-radius: 25px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: left;
+}
+
+/* Form Heading */
+form h3 {
+    color: #6c63ff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Input Fields */
+form input[type="number"],
+form input[type="text"],
+form input[type="date"] {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid #e0e6ff;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Input Focus State */
+form input[type="number"]:focus,
+form input[type="text"]:focus,
+form input[type="date"]:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Placeholder Styling */
+form input::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Submit Button */
+form button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #6c63ff, #9c88ff);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+/* Button Hover State */
+form button[type="submit"]:hover {
+    background: linear-gradient(135deg, #5a52e6, #8a7aff);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+}
+
+/* Button Active State */
+form button[type="submit"]:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(108, 99, 255, 0.2);
+}
+
+/* Date Input Specific Styling */
+form input[type="date"] {
+    color: #444;
+    cursor: pointer;
+}
+
+form input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.5);
+    transition: filter 0.3s ease;
+}
+
+form input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    filter: invert(0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+    
+    form {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+    
+    form h3 {
+        font-size: 1.3rem;
+    }
+    
+    form input[type="number"],
+    form input[type="text"],
+    form input[type="date"] {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    form button[type="submit"] {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}
+
+        body {
+            background-color: #f0f4ff;
+            font-family: 'Comic Sans MS', 'Poppins', cursive, sans-serif;
+            padding: 2rem;
+            color: #444;
+            text-align: center;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Heading */
+        .chart-container h2 {
+            color: #6c63ff;
+            margin-bottom: 2rem;
+        }
+
+        /* Canvas for chart.js or matplotlib image */
+        .chart-container canvas,
+        .chart-container img {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+
+        /* Form Heading */
+        form h3 {
+            color: #6c63ff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Input Fields and Select */
+        form input[type="number"],
+        form input[type="text"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e6ff;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background-color: white;
+        }
+
+        /* Input and Select Focus State */
+        form input[type="number"]:focus,
+        form input[type="text"]:focus,
+        form input[type="date"]:focus,
+        form select:focus {
+            outline: none;
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Select Dropdown Specific Styling */
+        form select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+
+        form select:hover {
+            border-color: #9c88ff;
+        }
+
+        /* Placeholder Styling */
+        form input::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Select First Option (Placeholder) Styling */
+        form select option:first-child {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Submit Button */
+        form button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #6c63ff, #9c88ff);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        /* Button Hover State */
+        form button[type="submit"]:hover {
+            background: linear-gradient(135deg, #5a52e6, #8a7aff);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Button Active State */
+        form button[type="submit"]:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(108, 99, 255, 0.2);
+        }
+
+        /* Date Input Specific Styling */
+        form input[type="date"] {
+            color: #444;
+            cursor: pointer;
+        }
+
+        form input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(0.5);
+            transition: filter 0.3s ease;
+        }
+
+        form input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            filter: invert(0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            
+            form {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+            
+            form h3 {
+                font-size: 1.3rem;
+            }
+            
+            form input[type="number"],
+            form input[type="text"],
+            form input[type="date"],
+            form select {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            form button[type="submit"] {
+                padding: 0.9rem;
+                font-size: 1rem;
+            }
+        }
+    
+</body>
+</html>

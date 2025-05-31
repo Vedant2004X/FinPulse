@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Dashboard!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="logo-area">
+                <h1>Welcome Back!!</h1>
+            </div>
+            <nav class="dashboard-nav">
+                <button id="homeBtn" class="nav-button active">Home</button>
+                <button id="goalsBtn" class="nav-button"><a href="#my_goal" style="text-decoration: none;color: #fff;">My Goals</a></button>
+                <button id="learnBtn" class="nav-button">Learn</button>
+                <button class="nav-button">Parental control</button>
+            </nav>
+            <div class="profile-area">
+                <img src="{{url_for('static', filename="images/character.png")}}" alt="User Avatar" class="avatar">
+                <span id="userName">Super Kid</span>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+                <section class="widget learning-zone-widget">
+                    <form action="/dashboard" method="POST">
+        <h3>Add an Expense</h3>
+        <input type="number" name="amount" step="0.01" required placeholder="Amount ($)">
+        
+        <select name="category" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Education">Education</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Healthcare">Entertainment</option>
+            <option value="Healthcare">
+                Other</option>
+        </select>
+        
+        <input type="text" name="description" placeholder="Description (optional)">
+        <input type="date" name="date" required>
+        <button type="submit">Add Expense</button>
+    </form>
+                </section>
+
+                <section class="widget learning-zone-widget">
+                    
+            <h2>Your Expense Breakdown</h2>
+{% if chart_file %}
+    <img src="{{ url_for('static', filename='expense_chart.png') }}" alt="Expense Chart">
+{% else %}
+    <p>No expenses to show yet.</p>
+{% endif %}
+<a href="/dashboard">← Back to Dashboard</a>
+                </section>
+            <section class="widget savings-goal-widget" id="my_goal">
+                <div class="widget-icon">🎯</div>
+                <h3>My Super Savings Goal!</h3>
+                <p>Saving for: <span id="goalName">A New Bike!</span> 🚲</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="savingsProgressBar">
+                        <span id="savingsProgressText">50%</span>
+                    </div>
+                </div>
+                <p><span id="savedAmount">$50.00</span> / <span id="goalAmount">$100.00</span></p>
+                <button id="addSavingsBtn" class="action-button">Add to Savings!</button>
+            </section>
+
+            
+
+             
+
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 KidDash Adventures. Keep exploring!</p>
+        </footer>
+    </div>
+
+    <div id="addSavingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal="addSavingsModal">&times;</span>
+            <h2>Add to Your Savings!</h2>
+            <p>How much did you save today?</p>
+            <input type="number" id="savingsAmountInput" placeholder="e.g., 5" min="1">
+            <button id="confirmAddSavingsBtn" class="action-button">Add It!</button>
+            <p id="savingsModalMessage" class="modal-message"></p>
+        </div>
+    </div>
+
+    <div id="addExpenseModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal="addExpenseModal">&times;</span>
+            <h2>Add an Expense!</h2>
+            <p>How much did you spend?</p>
+            <input type="number" id="expenseAmountInput" placeholder="e.g., 3" min="1">
+            <button id="confirmAddExpenseBtn" class="action-button">Record Expense!</button>
+            <p id="expenseModalMessage" class="modal-message"></p>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal="messageModal">&times;</span>
+            <h2 id="messageModalTitle"></h2>
+            <p id="messageModalText"></p>
+            <button id="messageModalCloseBtn" class="action-button">Got It!</button>
+        </div>
+    </div>
+
+    <script src="<script src="{{ url_for('static', filename='static/dashboard.js') }}"></script>"></script>
+</body>
+</html>

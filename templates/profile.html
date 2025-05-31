@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPulse - Your Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #2d3748;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4c51bf;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #4c51bf;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .content-area {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-bottom: 1.6rem;
+        }
+
+        /* Profile specific styles */
+        .profile-page-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            width: 100%;
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #4c51bf;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #48bb78;
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-bio {
+            color: #4a5568;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        .edit-profile-btn {
+            background: #4c51bf;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-profile-btn:hover {
+            background: #3a42a0;
+            transform: translateY(-2px);
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 180px;
+            max-width: 30%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4c51bf;
+        }
+
+        .section-title {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title h3 {
+            font-size: 1.5rem;
+        }
+
+        .section-title i {
+            color: #4c51bf;
+            font-size: 1.8rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #2d3748;
+            transition: transform 0.3s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-card:nth-child(2) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .achievement-card:nth-child(3) { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
+        .achievement-card:nth-child(4) { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: #4c51bf;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .achievement-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .activity-list {
+            list-style: none;
+            width: 100%;
+            text-align: left;
+            padding-left: 0;
+        }
+
+        .activity-list li {
+            background: #f7fafc;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            color: #2d3748;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s;
+        }
+
+        .activity-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .activity-date {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .close-modal:hover {
+            color: #4c51bf;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .save-btn {
+            background: #4c51bf;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .save-btn:hover {
+            background: #3a42a0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .profile-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            .stat-card {
+                max-width: 90%;
+                width: 100%;
+            }
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+.logo a{
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            .profile-header {
+                padding-bottom: 1.5rem;
+            }
+            .profile-info h2 {
+                font-size: 1.8rem;
+            }
+            .profile-bio {
+                font-size: 0.9rem;
+            }
+            .edit-profile-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .stat-card {
+                padding: 1rem;
+            }
+            .stat-card p {
+                font-size: 1.5rem;
+            }
+            .section-title h3 {
+                font-size: 1.3rem;
+            }
+            .section-title i {
+                font-size: 1.5rem;
+            }
+            .achievement-icon {
+                font-size: 2.5rem;
+            }
+            .achievement-card h4 {
+                font-size: 1.1rem;
+            }
+            .activity-list li {
+                font-size: 0.9rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+ <header class="header">
+        <div class="logo"><a href="{{url_for('index')}}"  style="text-decoration: none;">💰 FinPulse</a></div>
+        <nav>
+            <ul class="nav-menu">
+
+             <li><a href="{{url_for('expense')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Expense &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Expense&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('goal')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Add Goal &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Add Goal&nbsp;</span>
+</button></a></li>
+               
+                <li><a href="{{url_for('learn')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Learn&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Learn&nbsp;</span>
+</button></a></li>
+<li><a href="{{url_for('pcontrol')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;P -Control&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;P-ontrol&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('profile')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Profile&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;profile&nbsp;</span>
+</button></a></li>
+
+ 
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <main class="content-area profile-page-content">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img id="profile-pic" src="https://placehold.co/150x150/667eea/ffffff?text=M" alt="Profile Picture">
+                    <div class="level-badge">Level 3</div>
+                </div>
+                <div class="profile-info">
+                    <h2 id="profile-name">Manesh</h2>
+                    <p class="profile-bio" id="profile-bio">
+                        Passionate about financial literacy and eager to learn more!
+                        Currently exploring investment basics. 📈
+                    </p>
+                    <button class="edit-profile-btn" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</button>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <h3>Total XP</h3>
+                    <p>1250 XP</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Modules Completed</h3>
+                    <p>8</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Quizzes Taken</h3>
+                    <p>15</p>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h3><i class="fas fa-trophy"></i> Your Achievements</h3>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <i class="fas fa-piggy-bank achievement-icon"></i>
+                    <h4>Saving Star</h4>
+                    <p>Completed 'Saving Money' module</p>
+                </div>
+                <div class="achievement-card">
+                    <i class="fas fa-chart-line achievement-icon"></i>
+                    <h4>Budget Boss</h4>
+                    <p>Mastered 'Budgeting 101'</p>
+                </div>
+                <div class="achievement-card">
+                    <i class="fas fa-coins achievement-icon"></i>
+                    <h4>Money Maestro</h4>
+                    <p>Earned 1000+ XP</p>
+                </div>
+                <div class="achievement-card">
+                    <i class="fas fa-award achievement-icon"></i>
+                    <h4>Quiz Whiz</h4>
+                    <p>Scored 90%+ on 5 quizzes</p>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h3><i class="fas fa-history"></i> Recent Activity</h3>
+            </div>
+            <ul class="activity-list">
+                <li>Completed "Investing Basics" module <span class="activity-date">May 28, 2025</span></li>
+                <li>Took "Daily Challenge" quiz <span class="activity-date">May 27, 2025</span></li>
+                <li>Reviewed "Credit & Credit Cards" <span class="activity-date">May 25, 2025</span></li>
+                <li>Earned "Saving Star" achievement <span class="activity-date">May 20, 2025</span></li>
+            </ul>
+        </main>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="edit-profile-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="edit-name">Name</label>
+                    <input type="text" id="edit-name" value="Jaya Prakash">
+                </div>
+                <div class="form-group">
+                    <label for="edit-bio">Bio</label>
+                    <textarea id="edit-bio">Passionate about financial literacy and eager to learn more! Currently exploring investment basics. 📈</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-avatar">Profile Picture URL</label>
+                    <input type="text" id="edit-avatar" value="https://placehold.co/150x150/667eea/ffffff?text=JP">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const editProfileModal = document.getElementById('edit-profile-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const profileForm = document.getElementById('profile-form');
+            const profileName = document.getElementById('profile-name');
+            const profileBio = document.getElementById('profile-bio');
+            const profilePic = document.getElementById('profile-pic');
+            const editName = document.getElementById('edit-name');
+            const editBio = document.getElementById('edit-bio');
+            const editAvatar = document.getElementById('edit-avatar');
+
+            // Open modal when edit button is clicked
+            editProfileBtn.addEventListener('click', function() {
+                editProfileModal.style.display = 'flex';
+            });
+
+            // Close modal when X is clicked
+            closeModalBtn.addEventListener('click', function() {
+                editProfileModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                if (event.target === editProfileModal) {
+                    editProfileModal.style.display = 'none';
+                }
+            });
+
+            // Handle form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update profile information
+                profileName.textContent = editName.value;
+                profileBio.textContent = editBio.value;
+                profilePic.src = editAvatar.value;
+                
+                // Close the modal
+                editProfileModal.style.display = 'none';
+                
+                // Show success message (you could add a toast notification here)
+                alert('Profile updated successfully!');
+            });
+
+            // Preview avatar URL when it changes
+            editAvatar.addEventListener('input', function() {
+                // In a real app, you might want to validate the URL first
+                profilePic.src = this.value;
+            });
+        });
+    </script>
+</body>
+</html>

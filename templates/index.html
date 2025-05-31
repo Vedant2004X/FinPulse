@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPulse - Learn Money, Grow Smart</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo"><a href="{{url_for('index')}}"  style="text-decoration: none;">💰 FinPulse</a></div>
+        <nav>
+            <ul class="nav-menu">
+
+             <li><a href="{{url_for('expense')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Expense &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Expense&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('goal')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Add Goal &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Add Goal&nbsp;</span>
+</button></a></li>
+               
+                <li><a href="{{url_for('learn')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Learn&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Learn&nbsp;</span>
+</button></a></li>
+
+<li><a href="{{url_for('pcontrol')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;P -Control&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;P-Control&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('profile')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Profile&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;profile&nbsp;</span>
+</button></a></li>
+
+ 
+            </ul>
+        </nav>
+    </header>
+ 
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="age-selector">
+                <h3>Select Your Age Group</h3>
+                <div class="age-buttons">
+                    <button class="age-btn active" data-age="kids">6-12</button>
+                    <button class="age-btn" data-age="teens">13-17</button>
+                    <button class="age-btn" data-age="young-adults">18-25</button>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h3 class="h3">Your Progress</h3>
+                <p>Level 3 - Money Explorer</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                </div>
+                <p>650 / 1000 XP</p>
+
+            </div>
+
+            
+        </aside>
+
+        <main class="content-area">
+            <h1>Welcome to Your Financial Journey! 🚀</h1>
+
+            <div class="learning-modules" id="learning-modules">
+                <!-- Modules will be populated by JavaScript based on age group -->
+            </div>
+
+            <div class="quiz-section">
+                <h3>🎯 Daily Challenge</h3>
+                <p>Test your knowledge and earn coins!</p>
+                <button class="quiz-btn" onclick="startQuiz()">Start Today's Quiz</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div>
+                <h3>💬 FinBot - Your Money Buddy</h3>
+                <p style="font-size: 0.8rem; opacity: 0.9;">Ask me anything about money!</p>
+            </div>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">×</button>
+        </div>
+        <div class="chatbot-messages" id="chat-messages">
+            <div class="message bot">
+                Hi there! 👋 I'm FinBot, your friendly money tutor! I'm here to help you learn about saving, spending, and making smart money choices. What would you like to know about money today?
+            </div>
+        </div>
+        <div class="typing-indicator" id="typing-indicator">
+            <span>FinBot is typing</span>
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <button class="voice-btn" id="voice-btn" onclick="toggleVoiceInput()" title="Voice Input">🎤</button>
+            <input type="text" id="chat-input" placeholder="Ask me about money or click 🎤 to speak..." onkeypress="handleChatKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()">→</button>
+        </div>
+    </div>
+
+    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+
+    <script scr="script.js">
+        const contentByAge = {
+            kids: [
+                {
+                    title: '🏦 What is Money?',
+                    description: 'Learn about coins, bills, and why we use money',
+                    gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+                },
+                {
+                    title: '🐷 Saving Money',
+                    description: 'Why saving is important and how to start',
+                    gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+                },
+                {
+                    title: '🛒 Smart Shopping',
+                    description: 'Learn to make good choices when buying things',
+                    gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+                },
+                {
+                    title: '🎯 Wants vs Needs',
+                    description: 'Understanding the difference between what you want and need',
+                    gradient: 'linear-gradient(135deg, #a8caba 0%, #5d4e75 100%)'
+                }
+            ],
+            teens: [
+                {
+                    title: '💳 Banking Basics',
+                    description: 'Checking accounts, savings accounts, and debit cards',
+                    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                },
+                {
+                    title: '📊 Budgeting 101',
+                    description: 'Create your first budget and track expenses',
+                    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                },
+                {
+                    title: '💼 Earning Money',
+                    description: 'Jobs, allowances, and entrepreneurship for teens',
+                    gradient: 'linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%)'
+                },
+                {
+                    title: '🎓 Planning for College',
+                    description: 'Understanding college costs and financial aid',
+                    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+                }
+            ],
+            'young-adults': [
+                {
+                    title: '💳 Credit & Credit Cards',
+                    description: 'Building credit history and using credit responsibly',
+                    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                },
+                {
+                    title: '🏠 Loans & Debt',
+                    description: 'Student loans, auto loans, and debt management',
+                    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                },
+                {
+                    title: '📈 Investing Basics',
+                    description: 'Stocks, bonds, and building wealth over time',
+                    gradient: 'linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%)'
+                },
+                {
+                    title: '🏦 Financial Independence',
+                    description: 'Emergency funds, retirement planning, and financial goals',
+                    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+                }
+            ]
+        };
+
+        // Chatbot responses based on age and topics
+        const chatResponses = {
+            kids: {
+                default: [
+                    "That's a great question! Let me explain it in a simple way. 😊",
+                    "I love helping kids learn about money! Here's what I know...",
+                    "Awesome question! Let's explore this together! 🌟"
+                ],
+                money: "Money is like a tool that helps us trade for things we need and want! Coins and bills are different amounts of money. We use money instead of trading toys because everyone agrees on its value! 🪙",
+                saving: "Saving means keeping some of your money safe for later! It's like putting cookies in a jar for tomorrow. When you save, your money grows and you can buy bigger things later! 🐷💰",
+                spending: "Spending is using your money to buy things. But remember - once you spend it, it's gone! That's why it's important to think before you buy. Ask yourself: Do I really need this? 🛒",
+                wants_needs: "Needs are things you must have to live - like food, clothes, and a home. Wants are things that would be nice to have - like toys and candy. Always take care of needs first! 🏠🍎"
+            },
+            teens: {
+                default: [
+                    "Great question! Let me break this down for you.",
+                    "I'm here to help you understand money better! Here's the scoop...",
+                    "That's an important topic for teens to understand!"
+                ],
+                banking: "Banks are safe places to keep your money! A checking account is for money you use regularly, and a savings account helps your money grow with interest. A debit card lets you use your own money from your account! 🏦",
+                budgeting: "A budget is like a plan for your money! Write down your income (money coming in) and expenses (money going out). Try the 50/30/20 rule: 50% for needs, 30% for wants, 20% for savings! 📊",
+                earning: "There are many ways to earn money as a teen! You could get a part-time job, do chores for allowance, pet-sit, tutor younger kids, or even start a small business like lawn care! 💼",
+                college: "College can be expensive, but there are ways to make it affordable! Look into scholarships, grants, work-study programs, and community college for the first two years. Start planning early! 🎓"
+            },
+            'young-adults': {
+                default: [
+                    "That's a crucial financial topic for young adults!",
+                    "Let me help you understand this important concept.",
+                    "This is key knowledge for building your financial future!"
+                ],
+                credit: "Credit is your ability to borrow money. Building good credit early is super important! Pay bills on time, keep credit card balances low, and don't close old accounts. Your credit score affects loans, apartments, and even jobs! 💳",
+                loans: "Loans can help you afford big purchases, but they cost extra through interest. Only borrow what you need and can afford to pay back. Student loans often have better terms than other debt. Always read the fine print! 📄",
+                investing: "Investing is putting money into stocks, bonds, or funds to grow wealth over time. Start early - even small amounts compound over decades! Consider index funds for beginners, and never invest money you can't afford to lose. 📈",
+                independence: "Financial independence means having enough saved to cover your expenses. Build an emergency fund (3-6 months of expenses), contribute to retirement accounts, and set specific financial goals with deadlines! 🏦"
+            }
+        };
+
+        let currentAge = 'kids';
+        let chatHistory = [];
+        let isListening = false;
+        let recognition = null;
+        let speechSynthesis = window.speechSynthesis;
+        let currentVoice = null;
+
+        // Initialize speech recognition and synthesis
+        function initializeSpeech() {
+            // Speech Recognition Setup
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    updateVoiceButton();
+                    addMessage('bot', '🎤 I\'m listening... speak your question!');
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    if (event.results[event.results.length - 1].isFinal) {
+                        document.getElementById('chat-input').value = transcript;
+                        sendMessage();
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    isListening = false;
+                    updateVoiceButton();
+                    addMessage('bot', '😅 Sorry, I couldn\'t hear you clearly. Try typing your question or click the microphone again!');
+                };
+
+                recognition.onend = function() {
+                    isListening = false;
+                    updateVoiceButton();
+                };
+            }
+
+            // Speech Synthesis Setup
+            if ('speechSynthesis' in window) {
+                // Wait for voices to load
+                speechSynthesis.onvoiceschanged = function() {
+                    const voices = speechSynthesis.getVoices();
+                    // Try to find a child-friendly voice
+                    currentVoice = voices.find(voice => 
+                        voice.name.includes('Female') || 
+                        voice.name.includes('Samantha') ||
+                        voice.name.includes('Karen') ||
+                        voice.lang.startsWith('en')
+                    ) || voices[0];
+                };
+            }
+        }
+
+        // Initialize the page
+        function init() {
+            updateContent();
+            addWelcomeMessage();
+            initializeSpeech();
+        }
+
+        // Update content based on age selection
+        function updateContent() {
+            const modules = contentByAge[currentAge];
+            const modulesContainer = document.getElementById('learning-modules');
+            
+            modulesContainer.innerHTML = modules.map(module => `
+                <div class="module-card" style="background: ${module.gradient}" onclick="openModule('${module.title}')">
+                    <h3>${module.title}</h3>
+                    <p>${module.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Age button event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageButtons = document.querySelectorAll('.age-btn');
+            
+            ageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    ageButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Update current age
+                    currentAge = this.dataset.age;
+                    // Update content
+                    updateContent();
+                    // Update chatbot context
+                    addMessage('bot', `Great! I've switched to ${currentAge === 'kids' ? 'kid-friendly' : currentAge === 'teens' ? 'teen' : 'young adult'} mode. How can I help you learn about money? 🎯`, true);
+                });
+            });
+            
+            init();
+        });
+
+        // Chat functionality
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            chatbot.classList.toggle('active');
+            
+            if (chatbot.classList.contains('active')) {
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage('user', message);
+                input.value = '';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Simulate API call delay and response
+                setTimeout(() => {
+                    const response = generateResponse(message);
+                    hideTypingIndicator();
+                    addMessage('bot', response, true); // Enable auto-speak for responses
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function addMessage(sender, text, shouldSpeak = false) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            
+            // Add speaker icon for bot messages
+            if (sender === 'bot') {
+                const speakerIcon = document.createElement('span');
+                speakerIcon.innerHTML = ' 🔊';
+                speakerIcon.style.cursor = 'pointer';
+                speakerIcon.style.opacity = '0.7';
+                speakerIcon.style.fontSize = '0.8em';
+                speakerIcon.title = 'Click to hear this message';
+                speakerIcon.onclick = () => speakText(text);
+                messageDiv.appendChild(speakerIcon);
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Store in chat history
+            chatHistory.push({ sender, text, timestamp: Date.now() });
+            
+            // Auto-speak bot responses (optional)
+            if (sender === 'bot' && shouldSpeak) {
+                setTimeout(() => speakText(text), 500);
+            }
+        }
+
+        function addWelcomeMessage() {
+            const ageText = currentAge === 'kids' ? 'young learner' : currentAge === 'teens' ? 'teen' : 'young adult';
+            addMessage('bot', `Welcome, ${ageText}! I'm excited to help you learn about money. You can ask me about saving, spending, budgeting, or any other money questions you have! 🌟`, true);
+        }
+
+        // Voice Input Functions
+        function toggleVoiceInput() {
+            if (!recognition) {
+                addMessage('bot', '😅 Sorry, voice input isn\'t supported in your browser. Try using Chrome or Edge!');
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function updateVoiceButton() {
+            const voiceBtn = document.getElementById('voice-btn');
+            if (isListening) {
+                voiceBtn.classList.add('recording');
+                voiceBtn.innerHTML = '⏹️';
+                voiceBtn.title = 'Stop Recording';
+            } else {
+                voiceBtn.classList.remove('recording', 'processing');
+                voiceBtn.innerHTML = '🎤';
+                voiceBtn.title = 'Voice Input';
+            }
+        }
+
+        // Voice Output Functions
+        function speakText(text) {
+            if (!speechSynthesis) {
+                console.warn('Speech synthesis not supported');
+                return;
+            }
+
+            // Stop any ongoing speech
+            speechSynthesis.cancel();
+
+            // Clean the text for better speech
+            const cleanText = text.replace(/[🎯🌟💰🏦📊💼🎓💳📈🏠🐷🛒🪙🍎💡📚🎤🔊😊😅👋🤔]/g, '');
+            
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            
+            // Voice settings based on age group
+            if (currentAge === 'kids') {
+                utterance.rate = 0.9;
+                utterance.pitch = 1.2;
+            } else if (currentAge === 'teens') {
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+            } else {
+                utterance.rate = 1.1;
+                utterance.pitch = 0.9;
+            }
+            
+            utterance.volume = 0.8;
+            
+            if (currentVoice) {
+                utterance.voice = currentVoice;
+            }
+            
+            utterance.onstart = function() {
+                console.log('Speech started');
+            };
+            
+            utterance.onend = function() {
+                console.log('Speech ended');
+            };
+            
+            utterance.onerror = function(event) {
+                console.error('Speech error:', event.error);
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'flex';
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'none';
+        }
+
+        function generateResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            const responses = chatResponses[currentAge];
+            
+            // Simple keyword matching for educational responses
+            if (lowerMessage.includes('money') || lowerMessage.includes('what is money')) {
+                return responses.money || responses.default[0];
+            } else if (lowerMessage.includes('save') || lowerMessage.includes('saving')) {
+                return responses.saving || responses.default[0];
+            } else if (lowerMessage.includes('spend') || lowerMessage.includes('spending') || lowerMessage.includes('buy')) {
+                return responses.spending || responses.default[0];
+            } else if (lowerMessage.includes('want') || lowerMessage.includes('need')) {
+                return responses.wants_needs || responses.default[0];
+            } else if (lowerMessage.includes('bank') || lowerMessage.includes('account')) {
+                return responses.banking || responses.default[0];
+            } else if (lowerMessage.includes('budget')) {
+                return responses.budgeting || responses.default[0];
+            } else if (lowerMessage.includes('job') || lowerMessage.includes('earn') || lowerMessage.includes('work')) {
+                return responses.earning || responses.default[0];
+            } else if (lowerMessage.includes('college') || lowerMessage.includes('school')) {
+                return responses.college || responses.default[0];
+            } else if (lowerMessage.includes('credit')) {
+                return responses.credit || responses.default[0];
+            } else if (lowerMessage.includes('loan') || lowerMessage.includes('debt')) {
+                return responses.loans || responses.default[0];
+            } else if (lowerMessage.includes('invest') || lowerMessage.includes('stock')) {
+                return responses.investing || responses.default[0];
+            } else if (lowerMessage.includes('independence') || lowerMessage.includes('retirement')) {
+                return responses.independence || responses.default[0];
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return "Hello! 👋 I'm so happy to chat with you about money! What would you like to learn today?";
+            } else if (lowerMessage.includes('help')) {
+                return "I'm here to help you learn about money! You can ask me about saving, spending, earning money, budgeting, or any other financial questions. What interests you most? 🤔";
+            } else {
+                // Fallback response with educational guidance
+                const randomDefault = responses.default[Math.floor(Math.random() * responses.default.length)];
+                return `${randomDefault} Try asking me about topics like saving money, smart spending, budgeting, or earning money. I'm here to make learning about finances fun and easy! 💡`;
+            }
+        }
+
+        function openModule(title) {
+            addMessage('bot', `Great choice! Let's learn about "${title}". What specific questions do you have about this topic? I can explain it step by step! 📚`, true);
+            toggleChat();
+        }
+
+        function startQuiz() {
+            const quizzes = {
+                kids: "Let's test your money knowledge! 🎯 If you have $5 and spend $2 on candy, how much money do you have left?",
+                teens: "Quiz time! 📊 If you earn $50/week and want to save 20% of it, how much should you save each week?",
+                'young-adults': "Financial challenge! 💼 If you have a credit card with 18% APR and a $1,000 balance, approximately how much interest will you pay per month if you only make minimum payments?"
+            };
+            
+            addMessage('bot', quizzes[currentAge], true);
+            toggleChat();
+        }
+
+        // API Integration Example (replace with your actual API key)
+        async function callAIAPI(message) {
+            // IMPORTANT: Replace this with your actual API implementation
+            // DO NOT expose API keys in frontend code in production
+            
+            const API_KEY = 'your-api-key-here'; // Move this to backend
+            
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': API_KEY,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-3-sonnet-20240229',
+                        max_tokens: 300,
+                        messages: [{
+                            role: 'user',
+                            content: `You are FinBot, a friendly financial education chatbot for ${currentAge}. The user is asking: "${message}". Provide an age-appropriate, encouraging response about financial literacy. Keep it conversational and educational.`
+                        }]
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.content[0].text;
+                } else {
+                    throw new Error('API call failed');
+                }
+            } catch (error) {
+                console.error('API Error:', error);
+                return generateResponse(message); // Fallback to local responses
+            }
+        }
+    </script>
+</body>
+</html>

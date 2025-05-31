@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPulse - Learn Financial Basics</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .learn-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .learn-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .learn-header h1 {
+            font-size: 2.5rem;
+            color: #4c51bf;
+            margin-bottom: 0.5rem;
+        }
+
+        .learn-header p {
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        /* Age Tabs */
+        .age-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .age-tab {
+            padding: 0.75rem 1.5rem;
+            background-color: #e2e8f0;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .age-tab.active {
+            background-color: #4c51bf;
+            color: white;
+        }
+
+        .age-tab:hover:not(.active) {
+            background-color: #cbd5e0;
+        }
+
+        /* Content Sections */
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .topic-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-card h2 {
+            color: #4c51bf;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .topic-content {
+            padding: 0.5rem;
+        }
+
+        .topic-content p, .topic-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-content ul, .topic-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Special Content Blocks */
+        .fun-fact, .activity, .vocab, .example, .tip, .concept {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #4c51bf;
+        }
+
+        .fun-fact h4, .activity h4, .vocab h4, .example h4, .tip h4, .concept h4 {
+            color: #2b6cb0;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #4c51bf;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* Card Comparison */
+        .card-comparison {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .card-type {
+            flex: 1;
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            border-top: 4px solid #4c51bf;
+        }
+
+        .card-type h3 {
+            color: #4c51bf;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Investing Options */
+        .investing-options {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .option {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .option h3 {
+            color: #4c51bf;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #4c51bf;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #434190;
+        }
+
+        /* Module Navigation */
+        .module-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .module-btn {
+            padding: 0.5rem 1rem;
+            background-color: #e2e8f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .module-btn.active {
+            background-color: #4c51bf;
+            color: white;
+        }
+
+        .module-btn:hover:not(.active) {
+            background-color: #cbd5e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .learn-container {
+                padding: 1rem;
+            }
+            
+            .age-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .card-comparison, .investing-options {
+                flex-direction: column;
+            }
+            
+            .learn-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #4c51bf;
+        }
+.logo a{
+            text-decoration: none;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+     <header class="header">
+        <div class="logo"><a href="{{url_for('index')}}"  style="text-decoration: none;">💰 FinPulse</a></div>
+        <nav>
+            <ul class="nav-menu">
+
+             <li><a href="{{url_for('expense')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Expense &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Expense&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('learn')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Add Goal &nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Add Goal&nbsp;</span>
+</button></a></li>
+               
+                <li><a href="{{url_for('learn')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Learn&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Learn&nbsp;</span>
+</button></a></li>
+<li><a href="{{url_for('pcontrol')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;P-Control&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;P-Control&nbsp;</span>
+</button></a></li>
+                <li><a href="{{url_for('profile')}}"><button class="button" data-text="Awesome">
+    <span class="actual-text" style="color: #000;">&nbsp;Profile&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;profile&nbsp;</span>
+</button></a></li>
+
+ 
+            </ul>
+        </nav>
+    </header>
+    <div class="learn-container">
+        <header class="learn-header">
+            <h1>💰 Financial Basics </h1>
+            <p>Learn about money in a fun and easy way!</p>
+        </header>
+
+        <div class="age-tabs">
+            <button class="age-tab active" data-age="6-9">Ages 6-12</button>
+            <button class="age-tab" data-age="10-12">Ages 13-17</button>
+            <button class="age-tab" data-age="13-15">Ages 18-25</button>
+        </div>
+
+        <div class="content-section">
+            <!-- Ages 6-9 Content -->
+            <div class="content active" data-age="6-9">
+                <div class="module-nav">
+                    <button class="module-btn active" data-module="1">Module 1</button>
+                    <button class="module-btn" data-module="2">Module 2</button>
+                    <button class="module-btn" data-module="3">Module 3</button>
+                    <button class="module-btn" data-module="4">Module 4</button>
+                    <button class="module-btn" data-module="5">Module 5</button>
+                </div>
+
+                <div class="module-content" data-module="1">
+                    <div class="topic-card">
+                        <h2>🪙 What is Money?</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Money is what we use to buy things we need and want. It comes in coins, bills, and digital forms.</p>
+                            <ul>
+                                <li>Coins: Small metal money (pennies, nickels, dimes)</li>
+                                <li>Bills: Paper money (dollar bills)</li>
+                                <li>Digital: Numbers in bank accounts or cards</li>
+                            </ul>
+                            <div class="fun-fact">
+                                <p>💡 Fun Fact: People once traded shells or animals instead of money!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="2" style="display:none">
+                    <div class="topic-card">
+                        <h2>🐷 Saving Money</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Saving means keeping money for later instead of spending it all now.</p>
+                            <ul>
+                                <li>Helps buy bigger things later</li>
+                                <li>Prepares for emergencies</li>
+                                <li>Watching money grow is exciting!</li>
+                            </ul>
+                            <div class="activity">
+                                <h4>Try This:</h4>
+                                <p>Use a clear jar to save coins and watch it fill up!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="3" style="display:none">
+                    <div class="topic-card">
+                        <h2>🛒 Needs vs Wants</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Needs are things we must have to live, wants are things we'd like to have.</p>
+                            <div class="card-comparison">
+                                <div class="card-type">
+                                    <h3>Needs</h3>
+                                    <ul>
+                                        <li>Food</li>
+                                        <li>Clothing</li>
+                                        <li>Shelter</li>
+                                    </ul>
+                                </div>
+                                <div class="card-type">
+                                    <h3>Wants</h3>
+                                    <ul>
+                                        <li>Toys</li>
+                                        <li>Candy</li>
+                                        <li>Video games</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tip">
+                                <p>💡 Tip: Always take care of needs before spending on wants!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="4" style="display:none">
+                    <div class="topic-card">
+                        <h2>💵 Earning Money</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Money doesn't just appear - people work to earn it!</p>
+                            <ul>
+                                <li>Allowance for chores</li>
+                                <li>Gifts for birthdays</li>
+                                <li>Small jobs like lemonade stands</li>
+                            </ul>
+                            <div class="activity">
+                                <h4>Try This:</h4>
+                                <p>Make a list of 5 ways you could earn money this week!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="5" style="display:none">
+                    <div class="topic-card">
+                        <h2>🧮 Counting Money</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Knowing how much money you have is important!</p>
+                            <ul>
+                                <li>Pennies = 1¢</li>
+                                <li>Nickels = 5¢</li>
+                                <li>Dimes = 10¢</li>
+                                <li>Quarters = 25¢</li>
+                                <li>Dollar bills = 100¢</li>
+                            </ul>
+                            <div class="activity">
+                                <h4>Practice:</h4>
+                                <p>If you have 2 quarters, 3 dimes and 4 pennies, how much do you have? (Answer: 84¢)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ages 10-12 Content -->
+            <div class="content" data-age="10-12">
+                <div class="module-nav">
+                    <button class="module-btn active" data-module="1">Module 1</button>
+                    <button class="module-btn" data-module="2">Module 2</button>
+                    <button class="module-btn" data-module="3">Module 3</button>
+                    <button class="module-btn" data-module="4">Module 4</button>
+                    <button class="module-btn" data-module="5">Module 5</button>
+                </div>
+
+                <div class="module-content" data-module="1">
+                    <div class="topic-card">
+                        <h2>🏦 Banks & Accounts</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Banks keep money safe and help it grow through accounts.</p>
+                            <table>
+                                <tr>
+                                    <th>Account Type</th>
+                                    <th>Purpose</th>
+                                </tr>
+                                <tr>
+                                    <td>Savings</td>
+                                    <td>Earns interest, for future goals</td>
+                                </tr>
+                                <tr>
+                                    <td>Checking</td>
+                                    <td>Daily spending with debit card</td>
+                                </tr>
+                            </table>
+                            <div class="vocab">
+                                <p><strong>Interest:</strong> Money banks pay you for keeping money with them!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="2" style="display:none">
+                    <div class="topic-card">
+                        <h2>📝 Making a Budget</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> A budget is a plan for your money to avoid overspending.</p>
+                            <ol>
+                                <li>Track income (allowance, gifts)</li>
+                                <li>List expenses (savings, spending)</li>
+                                <li>Follow your plan</li>
+                                <li>Adjust as needed</li>
+                            </ol>
+                            <div class="example">
+                                <h4>Example Budget:</h4>
+                                <p>$20 weekly allowance:<br>
+                                - Save: $8 (40%)<br>
+                                - Spend: $12 (school lunch $5, entertainment $7)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="3" style="display:none">
+                    <div class="topic-card">
+                        <h2>🛍 Smart Shopping</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Smart shoppers compare prices and quality before buying.</p>
+                            <ul>
+                                <li>Check unit prices (price per ounce/pound)</li>
+                                <li>Look for sales and discounts</li>
+                                <li>Read product reviews</li>
+                                <li>Avoid impulse buys</li>
+                            </ul>
+                            <div class="tip">
+                                <p>💡 Tip: Wait 24 hours before big purchases to avoid impulse buying!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="4" style="display:none">
+                    <div class="topic-card">
+                        <h2>📱 Digital Money</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Digital payments are convenient but require caution.</p>
+                            <ul>
+                                <li>Debit cards spend your money directly</li>
+                                <li>Mobile payments (Apple Pay, Venmo)</li>
+                                <li>Online purchases need parent approval</li>
+                                <li>Always protect passwords/PINs</li>
+                            </ul>
+                            <div class="concept">
+                                <p><strong>Security Tip:</strong> Never share banking info online!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="5" style="display:none">
+                    <div class="topic-card">
+                        <h2>🎯 Setting Goals</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Financial goals help focus your saving efforts.</p>
+                            <ul>
+                                <li>Short-term: Save for a few weeks/months</li>
+                                <li>Long-term: Save for a year or more</li>
+                                <li>Make goals SMART: Specific, Measurable, Achievable, Relevant, Time-bound</li>
+                            </ul>
+                            <div class="activity">
+                                <h4>Try This:</h4>
+                                <p>Set one short-term and one long-term money goal today!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ages 13-15 Content -->
+            <div class="content" data-age="13-15">
+                <div class="module-nav">
+                    <button class="module-btn active" data-module="1">Module 1</button>
+                    <button class="module-btn" data-module="2">Module 2</button>
+                    <button class="module-btn" data-module="3">Module 3</button>
+                    <button class="module-btn" data-module="4">Module 4</button>
+                    <button class="module-btn" data-module="5">Module 5</button>
+                </div>
+
+                <div class="module-content" data-module="1">
+                    <div class="topic-card">
+                        <h2>💳 Debit vs Credit Cards</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Different cards work differently with your money.</p>
+                            <div class="card-comparison">
+                                <div class="card-type">
+                                    <h3>Debit Card</h3>
+                                    <ul>
+                                        <li>Uses your money directly</li>
+                                        <li>No debt risk</li>
+                                        <li>Good for daily use</li>
+                                    </ul>
+                                </div>
+                                <div class="card-type">
+                                    <h3>Credit Card</h3>
+                                    <ul>
+                                        <li>Borrowed money</li>
+                                        <li>Builds credit history</li>
+                                        <li>Requires discipline</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tip">
+                                <p>💡 Pro Tip: Pay credit card balances in full each month to avoid interest!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="2" style="display:none">
+                    <div class="topic-card">
+                        <h2>📈 Investing Basics</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Investing helps money grow over time.</p>
+                            <div class="investing-options">
+                                <div class="option">
+                                    <h3>Savings</h3>
+                                    <p>Safe, low growth</p>
+                                </div>
+                                <div class="option">
+                                    <h3>Stocks</h3>
+                                    <p>Own company shares</p>
+                                </div>
+                                <div class="option">
+                                    <h3>Bonds</h3>
+                                    <p>Loan to earn interest</p>
+                                </div>
+                            </div>
+                            <div class="concept">
+                                <p><strong>Compound Interest:</strong> Earnings generate more earnings over time!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="3" style="display:none">
+                    <div class="topic-card">
+                        <h2>📊 Understanding Taxes</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Taxes fund public services and affect earnings.</p>
+                            <ul>
+                                <li>Income tax: Paid on money earned</li>
+                                <li>Sales tax: Added to purchases</li>
+                                <li>Paycheck deductions reduce take-home pay</li>
+                                <li>Tax returns reconcile payments</li>
+                            </ul>
+                            <div class="example">
+                                <h4>Example:</h4>
+                                <p>A $15/hr job might pay $12/hr after taxes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="4" style="display:none">
+                    <div class="topic-card">
+                        <h2>🏆 Building Credit</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Good credit saves money on loans and rentals.</p>
+                            <ul>
+                                <li>Pay bills on time</li>
+                                <li>Keep credit card balances low</li>
+                                <li>Don't open too many accounts</li>
+                                <li>Check credit reports annually</li>
+                            </ul>
+                            <div class="tip">
+                                <p>💡 Did You Know? Landlords and employers often check credit history!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-content" data-module="5" style="display:none">
+                    <div class="topic-card">
+                        <h2>🌍 Global Economics</h2>
+                        <div class="topic-content">
+                            <p><strong>Summary:</strong> Money systems connect worldwide.</p>
+                            <ul>
+                                <li>Currencies vary by country</li>
+                                <li>Exchange rates fluctuate</li>
+                                <li>Global trade affects prices</li>
+                                <li>Cryptocurrencies are digital alternatives</li>
+                            </ul>
+                            <div class="fun-fact">
+                                <p>💡 As of 2023, there are 180 currencies recognized by the UN!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-btn prev-btn">← Previous</button>
+            <button class="nav-btn next-btn">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Age tab functionality
+            const ageTabs = document.querySelectorAll('.age-tab');
+            const contentSections = document.querySelectorAll('.content');
+            
+            ageTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and content
+                    ageTabs.forEach(t => t.classList.remove('active'));
+                    contentSections.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const ageGroup = this.getAttribute('data-age');
+                    document.querySelector(`.content[data-age="${ageGroup}"]`).classList.add('active');
+                    
+                    // Reset to first module when changing age groups
+                    resetModuleNavigation(ageGroup);
+                });
+            });
+            
+            // Module navigation functionality
+            function setupModuleNavigation(ageGroup) {
+                const moduleBtns = document.querySelectorAll(`.content[data-age="${ageGroup}"] .module-btn`);
+                const moduleContents = document.querySelectorAll(`.content[data-age="${ageGroup}"] .module-content`);
+                
+                moduleBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Remove active class from all buttons and hide all contents
+                        moduleBtns.forEach(b => b.classList.remove('active'));
+                        moduleContents.forEach(c => c.style.display = 'none');
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Show corresponding content
+                        const moduleNum = this.getAttribute('data-module');
+                        document.querySelector(`.content[data-age="${ageGroup}"] .module-content[data-module="${moduleNum}"]`).style.display = 'block';
+                    });
+                });
+            }
+            
+            // Reset module navigation to first module
+            function resetModuleNavigation(ageGroup) {
+                const moduleBtns = document.querySelectorAll(`.content[data-age="${ageGroup}"] .module-btn`);
+                const moduleContents = document.querySelectorAll(`.content[data-age="${ageGroup}"] .module-content`);
+                
+                // Remove active class from all buttons and hide all contents
+                moduleBtns.forEach(b => b.classList.remove('active'));
+                moduleContents.forEach(c => c.style.display = 'none');
+                
+                // Activate first module
+                if (moduleBtns.length > 0) {
+                    moduleBtns[0].classList.add('active');
+                    moduleContents[0].style.display = 'block';
+                }
+                
+                // Set up event listeners for this age group
+                setupModuleNavigation(ageGroup);
+            }
+            
+            // Initialize first age group's modules
+            resetModuleNavigation('6-9');
+            
+            // Navigation buttons functionality
+            const nextBtn = document.querySelector('.next-btn');
+            const prevBtn = document.querySelector('.prev-btn');
+            
+            nextBtn.addEventListener('click', function() {
+                const currentTab = document.querySelector('.age-tab.active');
+                const currentAgeGroup = currentTab.getAttribute('data-age');
+                
+                // Check if we're navigating modules within an age group
+                const activeModuleBtn = document.querySelector(`.content[data-age="${currentAgeGroup}"] .module-btn.active`);
+                if (activeModuleBtn) {
+                    const nextModuleBtn = activeModuleBtn.nextElementSibling || 
+                                        document.querySelector(`.content[data-age="${currentAgeGroup}"] .module-btn:first-child`);
+                    if (nextModuleBtn) nextModuleBtn.click();
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                const currentTab = document.querySelector('.age-tab.active');
+                const currentAgeGroup = currentTab.getAttribute('data-age');
+                
+                // Check if we're navigating modules within an age group
+                const activeModuleBtn = document.querySelector(`.content[data-age="${currentAgeGroup}"] .module-btn.active`);
+                if (activeModuleBtn) {
+                    const prevModuleBtn = activeModuleBtn.previousElementSibling || 
+                                        document.querySelector(`.content[data-age="${currentAgeGroup}"] .module-btn:last-child`);
+                    if (prevModuleBtn) prevModuleBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

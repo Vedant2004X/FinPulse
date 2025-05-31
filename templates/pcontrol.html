@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent & Teacher Zone - Financial Goals Tracker</title>
+    <link rel="stylesheet" href="parental_control.css">
+    <style>
+        /* Basic body styling for this separate page, can be expanded or customized */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* A light, neutral background */
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%); /* A different gradient for this page's header */
+            padding: 25px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .page-header .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .page-header .back-link:hover {
+            background-color: rgba(255,255,255,0.4);
+        }
+
+        /* content-section class from the original CSS might provide some padding */
+        /* If not, parental_control.css should handle layout of .parental-control-widget */
+        .content-section-parental {
+             padding: 20px 15px; /* Standardized padding */
+        }
+         @media (min-width: 768px) {
+            .content-section-parental {
+                padding: 40px 30px;
+            }
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo"><a href="{{url_for('index')}}" style="text-decoration: none;">💰 FinPulse</a></div>
+        <nav>
+            <ul class="nav-menu">
+
+                <li><a href="{{url_for('expense')}}"><button class="button" data-text="Awesome">
+                            <span class="actual-text" style="color: #000;">&nbsp;Expense &nbsp;</span>
+                            <span aria-hidden="true" class="hover-text">&nbsp;Expense&nbsp;</span>
+                        </button></a></li>
+                <li><a href="{{url_for('goal')}}"><button class="button" data-text="Awesome">
+                            <span class="actual-text" style="color: #000;">&nbsp;Add Goal &nbsp;</span>
+                            <span aria-hidden="true" class="hover-text">&nbsp;Add Goal&nbsp;</span>
+                        </button></a></li>
+
+                <li><a href="{{url_for('learn')}}"><button class="button" data-text="Awesome">
+                            <span class="actual-text" style="color: #000;">&nbsp;Learn&nbsp;</span>
+                            <span aria-hidden="true" class="hover-text">&nbsp;Learn&nbsp;</span>
+                        </button></a></li>
+                <li><a href="{{url_for('pcontrol')}}"><button class="button" data-text="Awesome">
+                            <span class="actual-text" style="color: #000;">&nbsp;P -Control&nbsp;</span>
+                            <span aria-hidden="true" class="hover-text">&nbsp;P-ontrol&nbsp;</span>
+                        </button></a></li>
+                <li><a href="{{url_for('profile')}}"><button class="button" data-text="Awesome">
+                            <span class="actual-text" style="color: #000;">&nbsp;Profile&nbsp;</span>
+                            <span aria-hidden="true" class="hover-text">&nbsp;profile&nbsp;</span>
+                        </button></a></li>
+
+
+            </ul>
+        </nav>
+    </header>
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Parent & Teacher Zone</h1>
+            
+        </div>
+
+        <div class="content-section-parental"> <section class="widget parental-control-widget">
+                <div class="widget-icon">👨‍🏫👩‍👧‍👦</div>
+                <h2>Guidance & Resources</h2> <p>Welcome to a dedicated space for parents and educators to support young learners on their financial journey!</p>
+
+                <div class="parental-control-section">
+                    <h3>Tips for Talking About Money</h3>
+                    <ul>
+                        <li>Start early: Introduce basic concepts like saving and spending.</li>
+                        <li>Be a role model: Let children see you making financial decisions.</li>
+                        <li>Make it fun: Use games and real-life examples.</li>
+                        <li>Encourage questions: Create an open dialogue about money.</li>
+                        <li>Set clear expectations: Discuss allowances, chores, and goals.</li>
+                    </ul>
+                </div>
+
+                <div class="parental-control-section">
+                    <h3>Downloadable Resources</h3>
+                    <p>Access our helpful PDFs to guide your discussions:</p>
+                    <ul>
+                        <li><a href="#" class="download-link action-button">Budgeting Basics for Kids (PDF)</a></li>
+                        <li><a href="#" class="download-link action-button">Fun Money Games (PDF)</a></li>
+                        <li><a href="#" class="download-link action-button">Allowance Chart Template (PDF)</a></li>
+                    </ul>
+                    <p class="small-text">Note: These are placeholder links for demonstration.</p>
+                </div>
+
+                <div class="parental-control-section">
+                    <h3>Report Scam Links & Safety Tips</h3>
+                    <p>Help us keep the KidDash community safe. If you encounter suspicious links or content, please report them.</p>
+                    <button id="reportScamBtn" class="action-button">Report a Scam Link</button>
+                    <p class="small-text">Always teach children to ask an adult before clicking unknown links or sharing personal information online.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="parental_control.js"></script>
+</body>
+</html>

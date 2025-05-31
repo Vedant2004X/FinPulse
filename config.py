@@ -1,0 +1,7 @@
+# config.py
+
+MYSQL_HOST = 'sql12.freesqldatabase.com'
+MYSQL_USER = 'sql12781061'
+MYSQL_PASSWORD = 'xS2g5WLcqf'
+MYSQL_DB = 'sql12781061'
+SECRET_KEY = 'bb0b497235b7449c15011be3e22c41e7048f0fcfd3d04ad4'
